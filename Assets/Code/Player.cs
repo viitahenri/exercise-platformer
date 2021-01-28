@@ -12,6 +12,10 @@ public enum Direction
 
 public class Player : MonoBehaviour
 {
+    private const string JUMP_ANIMATION_NAME = "Jump";
+    private const string LAND_ANIMATION_NAME = "Land";
+
+    [Header("Gameplay")]
     public LayerMask WallMask;
     [Range(0, 20f)]
     public float MoveSpeed = 10f;
@@ -21,6 +25,9 @@ public class Player : MonoBehaviour
     public float WallJumpAngle = 45f;
     [Range(0, 50f)]
     public float WallJumpForce = 30f;
+
+    [Header("Sounds")]
+    [SerializeField] private List<AudioClip> _jumpClips = new List<AudioClip>();
 
     public Rigidbody2D Rigidbody { get { return _rigidbody; } }
     public StateMachine StateMachine { get { return _stateMachine; } }
@@ -36,10 +43,15 @@ public class Player : MonoBehaviour
     private Direction _direction = Direction.Nil;
     private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private ContactFilter2D _filter;
+    private Animation _animation;
+    private bool _isGrounded = false;
+    private AudioSource _audioSource;
 
     void Start()
     {
+        _animation = GetComponent<Animation>();
         _rigidbody = GetComponent<Rigidbody2D>();
+        _audioSource = GetComponent<AudioSource>();
 
         _stateMachine = new StateMachine(this);
 
@@ -66,8 +78,17 @@ public class Player : MonoBehaviour
             _rigidbody.GetContacts(_filter, _contacts);
             var normal = _contacts.First().normal;
             if (Vector2.Dot(normal, Vector2.up) == 1)
+            {
+                if (!_isGrounded) // Wasn't grounded before!
+                {
+                    _animation.Play(LAND_ANIMATION_NAME, PlayMode.StopSameLayer);
+                }
+                _isGrounded = true;
                 return true;
+            }
         }
+
+        _isGrounded = false;
         return false;
     }
 
@@ -91,6 +112,7 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         _rigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
+        JumpEffect();
     }
 
     public void WallJump(Vector2 normal)
@@ -106,5 +128,16 @@ public class Player : MonoBehaviour
 
         CurrentDirection = CurrentDirection == Direction.Left ? Direction.Right : Direction.Left;
         Debug.Log($"Player Wall Jump to Dir {CurrentDirection}");
+        JumpEffect();
+    }
+
+    void JumpEffect()
+    {
+        _animation.Play(JUMP_ANIMATION_NAME, PlayMode.StopSameLayer);
+
+        if (_jumpClips.Count > 0)
+        {
+            _audioSource.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Count)]);
+        }
     }
 }
