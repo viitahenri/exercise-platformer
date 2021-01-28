@@ -5,17 +5,21 @@ using UnityEngine;
 
 public class WallSlidingState : State
 {
-    public WallSlidingState(Player player) : base(player)
-    {
-        
-    }
+    private float _timer = 0f;
+
+    public WallSlidingState(Player player) : base(player) { }
 
     public override void Enter()
     {
         Debug.Log("Wallslide");
-
+        _timer = 0f;
     }
-    
+
+    public override void Update()
+    {
+        _timer += Time.deltaTime;
+    }
+
     public override void FixedUpdate()
     {
         if (_player.IsGrounded())

@@ -7,8 +7,7 @@ public class FallingState : State
 {
     private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private ContactFilter2D _filter;
-    private const float GracePeriod = .2f;
-    private float _graceTimer = 0f;
+    private float _timer = 0f;
 
     public FallingState(Player player) : base(player)
     {
@@ -19,7 +18,23 @@ public class FallingState : State
     public override void Enter()
     {
         Debug.Log($"Falling");
+        _timer = 0f;
     }
+
+    public override void Exit()
+    {
+        _player.Sprite.transform.localScale = Vector3.one;
+    }
+
+    public override void Update()
+    {
+        // Squeeze the sprite a bit when falling
+        _timer += Time.deltaTime;
+        var squeezeX = Mathf.Lerp(1f, 0.8f, _timer);
+        var squeezeY = Mathf.Lerp(1f, 1.2f, _timer);
+        _player.Sprite.transform.localScale = new Vector3(squeezeX, squeezeY, 1f);
+    }
+
     
     public override void FixedUpdate()
     {

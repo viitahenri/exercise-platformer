@@ -31,6 +31,7 @@ public class Player : MonoBehaviour
 
     public Rigidbody2D Rigidbody { get { return _rigidbody; } }
     public StateMachine StateMachine { get { return _stateMachine; } }
+    public SpriteRenderer Sprite{ get { return _sprite; } }
     public Direction CurrentDirection
     {
         get { return _direction; }
@@ -46,12 +47,14 @@ public class Player : MonoBehaviour
     private Animation _animation;
     private bool _isGrounded = false;
     private AudioSource _audioSource;
+    private SpriteRenderer _sprite;
 
     void Start()
     {
         _animation = GetComponent<Animation>();
         _rigidbody = GetComponent<Rigidbody2D>();
         _audioSource = GetComponent<AudioSource>();
+        _sprite = GetComponentInChildren<SpriteRenderer>();
 
         _stateMachine = new StateMachine(this);
 
@@ -69,6 +72,8 @@ public class Player : MonoBehaviour
         {
             _stateMachine.HandleInput();
         }
+
+        _stateMachine.Update();
     }
 
     public bool IsGrounded()
