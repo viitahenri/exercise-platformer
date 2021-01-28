@@ -13,13 +13,13 @@ public enum Direction
 public class Player : MonoBehaviour
 {
     public LayerMask WallMask;
-    [Range(5, 20f)]
+    [Range(0, 20f)]
     public float MoveSpeed = 10f;
-    [Range(5, 30f)]
+    [Range(0, 30f)]
     public float JumpForce = 15f;
     [Range(10, 80f)]
     public float WallJumpAngle = 45f;
-    [Range(5, 50f)]
+    [Range(0, 50f)]
     public float WallJumpForce = 30f;
 
     public Rigidbody2D Rigidbody { get { return _rigidbody; } }
