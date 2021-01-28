@@ -6,6 +6,6 @@ public class StartButton : MonoBehaviour
 {
     public void StartGame()
     {
-        UnityEngine.SceneManagement.SceneManager.LoadScene("Level01");
+        UnityEngine.SceneManagement.SceneManager.LoadScene("Level");
     }
 }

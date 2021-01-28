@@ -24,6 +24,11 @@ public class RunningState : State
         {
             _player.StateMachine.ChangeState(_player.StateMachine.wallHuggingState);
         }
+
+        if (!_player.IsGrounded())
+        {
+            _player.StateMachine.ChangeState(_player.StateMachine.fallingState);
+        }
     }
 
     public override void Exit()

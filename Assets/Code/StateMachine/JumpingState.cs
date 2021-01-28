@@ -12,6 +12,8 @@ public class JumpingState : State
 
     public JumpingState(Player player) : base(player)
     {
+        _filter = new ContactFilter2D();
+        _filter.SetLayerMask(player.WallMask);
     }
 
     public override void Enter()
@@ -41,14 +43,22 @@ public class JumpingState : State
 
         if (_graceTimer > GracePeriod)
         {
-            if (_player.IsTouchingWall())
-            {
-                _player.StateMachine.ChangeState(_player.StateMachine.wallSlidingState);
-            }
-            else if (_player.IsGrounded())
+            if (_player.IsGrounded())
             {
                 _player.StateMachine.ChangeState(_player.StateMachine.runningState);
             }
+            else if (_player.IsTouchingWall())
+            {
+                _player.Rigidbody.GetContacts(_filter, _contacts);
+                var normal = _contacts.First().normal;
+                var dot = Vector2.Dot(_contacts.First().normal, Vector2.down);
+                if (dot < 1) // Don't wallslide on ceiling
+                    _player.StateMachine.ChangeState(_player.StateMachine.wallSlidingState);
+            }
+            else
+            {
+                _player.StateMachine.ChangeState(_player.StateMachine.fallingState);
+            }            
         }
     }
 

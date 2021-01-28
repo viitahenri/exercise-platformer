@@ -7,6 +7,7 @@ public class StateMachine
     public StationaryState stationaryState;    
     public RunningState runningState;
     public JumpingState jumpingState;
+    public FallingState fallingState;
     public WallSlidingState wallSlidingState;
     public WallHuggingState wallHuggingState;
 
@@ -17,6 +18,7 @@ public class StateMachine
         stationaryState = new StationaryState(player);
         runningState = new RunningState(player);
         jumpingState = new JumpingState(player);
+        fallingState = new FallingState(player);
         wallSlidingState = new WallSlidingState(player);
         wallHuggingState = new WallHuggingState(player);
         

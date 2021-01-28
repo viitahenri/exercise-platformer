@@ -12,11 +12,14 @@ public enum Direction
 
 public class Player : MonoBehaviour
 {
-    public LayerMask FloorMask;
     public LayerMask WallMask;
+    [Range(5, 20f)]
     public float MoveSpeed = 10f;
+    [Range(5, 30f)]
     public float JumpForce = 15f;
+    [Range(10, 80f)]
     public float WallJumpAngle = 45f;
+    [Range(5, 50f)]
     public float WallJumpForce = 30f;
 
     public Rigidbody2D Rigidbody { get { return _rigidbody; } }
@@ -31,12 +34,17 @@ public class Player : MonoBehaviour
     private Vector2 _velocity = Vector2.zero;
     private StateMachine _stateMachine;
     private Direction _direction = Direction.Nil;
+    private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
+    private ContactFilter2D _filter;
 
     void Start()
     {
         _rigidbody = GetComponent<Rigidbody2D>();
 
         _stateMachine = new StateMachine(this);
+
+        _filter = new ContactFilter2D();
+        _filter.SetLayerMask(WallMask);
     }
     void FixedUpdate()
     {
@@ -53,16 +61,26 @@ public class Player : MonoBehaviour
 
     public bool IsGrounded()
     {
-        var result = _rigidbody.IsTouchingLayers(FloorMask);
-        //Debug.Log($"Is Grounded {result}");
-        return result;
+        if (_rigidbody.IsTouchingLayers(WallMask))
+        {
+            _rigidbody.GetContacts(_filter, _contacts);
+            var normal = _contacts.First().normal;
+            if (Vector2.Dot(normal, Vector2.up) == 1)
+                return true;
+        }
+        return false;
     }
 
     public bool IsTouchingWall()
     {
-        var result = _rigidbody.IsTouchingLayers(WallMask);
-        //Debug.Log($"Is Touching Wall {result}");
-        return result;
+        if (_rigidbody.IsTouchingLayers(WallMask))
+        {
+            _rigidbody.GetContacts(_filter, _contacts);
+            var normal = _contacts.First().normal;
+            if (Mathf.Abs(Vector2.Dot(normal, Vector2.right)) == 1)
+                return true;
+        }
+        return false;
     }
 
     public bool IsWallSliding()
