@@ -67,6 +67,7 @@ public class Player : MonoBehaviour
     {
         transform.position = position;
         StateMachine.ChangeState(StateMachine.stationaryState);
+        _rigidbody.velocity = Vector3.zero;
     }
 
     void FixedUpdate()
@@ -98,8 +99,7 @@ public class Player : MonoBehaviour
         if (_rigidbody.IsTouchingLayers(WallMask))
         {
             _rigidbody.GetContacts(_filter, _contacts);
-            var normal = _contacts.First().normal;
-            if (Vector2.Dot(normal, Vector2.up) == 1)
+            if (_contacts.Any(c => Vector2.Dot(c.normal, Vector2.up) == 1))
             {
                 if (!_isGrounded) // Wasn't grounded before!
                 {
@@ -119,8 +119,7 @@ public class Player : MonoBehaviour
         if (_rigidbody.IsTouchingLayers(WallMask))
         {
             _rigidbody.GetContacts(_filter, _contacts);
-            var normal = _contacts.First().normal;
-            if (Mathf.Abs(Vector2.Dot(normal, Vector2.right)) == 1)
+            if (_contacts.Any(c => Mathf.Abs(Vector2.Dot(c.normal, Vector2.right)) == 1))
                 return true;
         }
         return false;
@@ -159,7 +158,7 @@ public class Player : MonoBehaviour
 
         if (_jumpClips.Count > 0)
         {
-            _audioSource.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Count)]);
+            //_audioSource.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Count)]);
         }
     }
 }
