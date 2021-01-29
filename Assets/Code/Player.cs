@@ -14,6 +14,7 @@ public class Player : MonoBehaviour
 {
     private const string JUMP_ANIMATION_NAME = "Jump";
     private const string LAND_ANIMATION_NAME = "Land";
+    private const string COIN_LAYER_NAME = "Coin";
 
     [Header("Gameplay")]
     public LayerMask WallMask;
@@ -49,7 +50,7 @@ public class Player : MonoBehaviour
     private AudioSource _audioSource;
     private SpriteRenderer _sprite;
 
-    void Start()
+    void Awake()
     {
         _animation = GetComponent<Animation>();
         _rigidbody = GetComponent<Rigidbody2D>();
@@ -61,6 +62,13 @@ public class Player : MonoBehaviour
         _filter = new ContactFilter2D();
         _filter.SetLayerMask(WallMask);
     }
+
+    public void ResetPosition(Vector3 position)
+    {
+        transform.position = position;
+        StateMachine.ChangeState(StateMachine.stationaryState);
+    }
+
     void FixedUpdate()
     {
         _stateMachine.FixedUpdate();
@@ -74,6 +82,15 @@ public class Player : MonoBehaviour
         }
 
         _stateMachine.Update();
+    }
+
+    void OnTriggerEnter2D(Collider2D col)
+    {
+        if (col.gameObject.layer == LayerMask.NameToLayer(COIN_LAYER_NAME))
+        {
+            Debug.Log($"Collected {col.name}");
+            LevelManager.Instance.CollectCoin(col.gameObject);
+        }
     }
 
     public bool IsGrounded()

@@ -7,8 +7,8 @@ public class JumpingState : State
 {
     private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private ContactFilter2D _filter;
-    private const float GracePeriod = .2f;
-    private float _graceTimer = 0f;
+    private const float Hysteresis = .1f;
+    private float _timer = 0f;
 
     public JumpingState(Player player) : base(player)
     {
@@ -34,14 +34,14 @@ public class JumpingState : State
             Debug.Log("Jump");
         }
 
-        _graceTimer = 0f;
+        _timer = 0f;
     }
     
     public override void FixedUpdate()
     {
-        _graceTimer += Time.fixedDeltaTime;
+        _timer += Time.fixedDeltaTime;
 
-        if (_graceTimer > GracePeriod)
+        if (_timer > Hysteresis)
         {
             if (_player.IsGrounded())
             {
