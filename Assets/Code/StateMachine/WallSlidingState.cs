@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class WallSlidingState : State
 {
+    private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private float _timer = 0f;
 
     public WallSlidingState(Player player) : base(player) { }
@@ -13,6 +14,7 @@ public class WallSlidingState : State
     {
         Debug.Log("Wallslide");
         _timer = 0f;
+        _player.Rigidbody.GetContacts(_contacts);
     }
 
     public override void Update()
@@ -28,6 +30,11 @@ public class WallSlidingState : State
                 _player.StateMachine.ChangeState(_player.StateMachine.wallHuggingState);
             else
                 _player.StateMachine.ChangeState(_player.StateMachine.runningState);
+        }
+        else if (!_player.IsTouchingWall())
+        {
+            _player.Rigidbody.AddForce(-_contacts.First().normal * 2f, ForceMode2D.Impulse);
+            _player.StateMachine.ChangeState(_player.StateMachine.fallingState);
         }
     }
 

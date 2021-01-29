@@ -120,7 +120,9 @@ public class Player : MonoBehaviour
         {
             _rigidbody.GetContacts(_filter, _contacts);
             if (_contacts.Any(c => Mathf.Abs(Vector2.Dot(c.normal, Vector2.right)) == 1))
+            {
                 return true;
+            }
         }
         return false;
     }
