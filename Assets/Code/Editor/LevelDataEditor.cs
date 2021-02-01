@@ -31,6 +31,6 @@ public class LevelDataEditor : Editor
             EditorGUILayout.EndHorizontal();
         }
 
-        
+        EditorUtility.SetDirty(levelData);
     }
 }
