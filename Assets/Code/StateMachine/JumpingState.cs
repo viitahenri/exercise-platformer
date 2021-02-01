@@ -24,15 +24,17 @@ public class JumpingState : State
 
         if (_player.IsWallSliding())
         {
-            Debug.Log("Wall jump");
+            // Debug.Log("Wall jump");
             _player.Rigidbody.GetContacts(_filter, _contacts);
             _player.WallJump(_contacts.First().normal);
         }
         else
         {
             _player.Jump();
-            Debug.Log("Jump");
+            // Debug.Log("Jump");
         }
+
+        _player.JumpEffect();
 
         _timer = 0f;
     }

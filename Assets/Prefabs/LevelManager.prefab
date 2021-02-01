@@ -1,0 +1,85 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &1495827375690151625
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 1495827375690151631}
+  - component: {fileID: 1495827375690151624}
+  m_Layer: 0
+  m_Name: LevelManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &1495827375690151631
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495827375690151625}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &1495827375690151624
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1495827375690151625}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fd0ee5181b49b4107958655e73694404, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _grid: {fileID: 0}
+  _coinsHUDSprite: {fileID: 0}
+  _wallPrefab: {fileID: 3545351147668411620, guid: 3dab89b64933f480981adef4af5bfade,
+    type: 3}
+  _playerPrefab: {fileID: 5169825977537542068, guid: 0d2c7b5c16d484282a5e6d3ef1724b17,
+    type: 3}
+  _coinPrefab: {fileID: 845069302061149434, guid: bf0ae13666d8d4c789ffc7b413848b99,
+    type: 3}
+  _levelEndScreenPrefab: {fileID: 6616234531691781675, guid: 07fc17ee564d44bbeaf1ca0ef4e443b6,
+    type: 3}
+  _levels:
+  - {fileID: 11400000, guid: 899c2a7b597eb476fba58a2b6aa2dc16, type: 2}
+  - {fileID: 11400000, guid: e10fe4f7e7d124629b767cc97b6f35a3, type: 2}
+  - {fileID: 11400000, guid: b5875da469724485f943dc3b56182d4c, type: 2}
+  - {fileID: 11400000, guid: dad6f8fa8945c4d9bb86931ebeebaba1, type: 2}
+  _coinFlyCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 2
+      outSlope: 2
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    - serializedVersion: 3
+      time: 1
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0
+      outWeight: 0
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  _coinFlyTime: 0.5

@@ -111,11 +111,11 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 71c1514a6bd24e1e882cebbe1904ce04, type: 3}
-  m_Name: Roboto-Regular SDF
+  m_Name: Roboto
   m_EditorClassIdentifier: 
-  hashCode: 0
+  hashCode: -955500245
   material: {fileID: -8470930955697313428}
-  materialHashCode: 0
+  materialHashCode: -1393991930
   m_Version: 1.1.0
   m_SourceFontFileGUID: 29ae59e3a417d48f8b084f3e9258b409
   m_SourceFontFile_EditorRef: {fileID: 0}
@@ -2630,24 +2630,24 @@ MonoBehaviour:
   m_FontWeightTable:
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 11400000, guid: 1a4581c262f5a421c8ff40674227e3a7, type: 2}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 0}
+    italicTypeface: {fileID: 11400000, guid: acef7da3f78004b229d8366f988384c9, type: 2}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 11400000, guid: 67b0173bef79d42c8a340930bc57af45, type: 2}
     italicTypeface: {fileID: 0}
   - regularTypeface: {fileID: 0}
     italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 0}
-    italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 0}
-    italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 0}
-    italicTypeface: {fileID: 0}
-  - regularTypeface: {fileID: 0}
-    italicTypeface: {fileID: 0}
+  - regularTypeface: {fileID: 11400000, guid: f6f92559718dd4554840ffaefa6fb142, type: 2}
+    italicTypeface: {fileID: 11400000, guid: 1faa3f8026d7d4121bb09edfcb590c7e, type: 2}
   fontWeights: []
   normalStyle: 0
   normalSpacingOffset: 0

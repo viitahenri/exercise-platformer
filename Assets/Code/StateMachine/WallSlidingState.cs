@@ -12,9 +12,10 @@ public class WallSlidingState : State
 
     public override void Enter()
     {
-        Debug.Log("Wallslide");
+        // Debug.Log("Wallslide");
         _timer = 0f;
         _player.Rigidbody.GetContacts(_contacts);
+        _player.Animation.Play(Player.WALLSLIDE_ANIMATION_NAME);
     }
 
     public override void Update()

@@ -10,7 +10,7 @@ public class StationaryState : State
 
     public override void Enter()
     {
-
+        _player.Animation.Play(Player.LAND_ANIMATION_NAME);
     }
     
     public override void FixedUpdate()

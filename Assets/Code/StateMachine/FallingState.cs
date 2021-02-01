@@ -18,7 +18,7 @@ public class FallingState : State
 
     public override void Enter()
     {
-        Debug.Log($"Falling");
+        // Debug.Log($"Falling");
         _timer = 0f;
     }
 

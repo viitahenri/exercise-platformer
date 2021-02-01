@@ -12,8 +12,10 @@ public enum Direction
 
 public class Player : MonoBehaviour
 {
-    private const string JUMP_ANIMATION_NAME = "Jump";
-    private const string LAND_ANIMATION_NAME = "Land";
+    public static readonly string WALLSLIDE_ANIMATION_NAME = "WallSlide";
+    public static readonly string JUMP_ANIMATION_NAME = "Jump";
+    public static readonly string LAND_ANIMATION_NAME = "Land";
+
     private const string COIN_LAYER_NAME = "Coin";
 
     [Header("Gameplay")]
@@ -38,6 +40,7 @@ public class Player : MonoBehaviour
         get { return _direction; }
         set { _direction = value; }
     }
+    public Animation Animation { get { return _animation; } }
 
     private Rigidbody2D _rigidbody;
     private Vector2 _velocity = Vector2.zero;
@@ -46,7 +49,6 @@ public class Player : MonoBehaviour
     private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private ContactFilter2D _filter;
     private Animation _animation;
-    private bool _isGrounded = false;
     private AudioSource _audioSource;
     private SpriteRenderer _sprite;
 
@@ -89,7 +91,7 @@ public class Player : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer(COIN_LAYER_NAME))
         {
-            Debug.Log($"Collected {col.name}");
+            // Debug.Log($"Collected {col.name}");
             LevelManager.Instance.CollectCoin(col.gameObject);
         }
     }
@@ -101,16 +103,10 @@ public class Player : MonoBehaviour
             _rigidbody.GetContacts(_filter, _contacts);
             if (_contacts.Any(c => Vector2.Dot(c.normal, Vector2.up) == 1))
             {
-                if (!_isGrounded) // Wasn't grounded before!
-                {
-                    _animation.Play(LAND_ANIMATION_NAME, PlayMode.StopSameLayer);
-                }
-                _isGrounded = true;
                 return true;
             }
         }
 
-        _isGrounded = false;
         return false;
     }
 
@@ -135,7 +131,6 @@ public class Player : MonoBehaviour
     public void Jump()
     {
         _rigidbody.AddForce(Vector2.up * JumpForce, ForceMode2D.Impulse);
-        JumpEffect();
     }
 
     public void WallJump(Vector2 normal)
@@ -150,11 +145,10 @@ public class Player : MonoBehaviour
         _rigidbody.AddForce(new Vector2(x, y) * WallJumpForce, ForceMode2D.Impulse);
 
         CurrentDirection = CurrentDirection == Direction.Left ? Direction.Right : Direction.Left;
-        Debug.Log($"Player Wall Jump to Dir {CurrentDirection}");
-        JumpEffect();
+        // Debug.Log($"Player Wall Jump to Dir {CurrentDirection}");
     }
 
-    void JumpEffect()
+    public void JumpEffect()
     {
         _animation.Play(JUMP_ANIMATION_NAME, PlayMode.StopSameLayer);
 

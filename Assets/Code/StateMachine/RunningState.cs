@@ -12,7 +12,8 @@ public class RunningState : State
 
     public override void Enter()
     {
-        Debug.Log($"Running to {_player.CurrentDirection}");
+        // Debug.Log($"Running to {_player.CurrentDirection}");
+        _player.Animation.Play(Player.LAND_ANIMATION_NAME);
     }
     
     public override void FixedUpdate()

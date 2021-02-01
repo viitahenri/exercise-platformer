@@ -12,7 +12,7 @@ public class WallHuggingState : State
 
     public override void Enter()
     {
-        Debug.Log("Wallhug");
+        // Debug.Log("Wallhug");
         _timer = 0f;
     }
     
