@@ -17,6 +17,7 @@ public class LevelManager : MonoBehaviour
     [Header("References in scene")]
     [SerializeField] private Grid _grid;
     [SerializeField] private RectTransform _coinsHUDSprite;
+    [SerializeField] private GameObject _hintText;
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _wallPrefab;
@@ -46,6 +47,8 @@ public class LevelManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+
+        PlayerPrefs.SetInt(HIGH_SCORE_PREFS_NAME, 0);
 
         Instance = this;
 
@@ -140,6 +143,11 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             _coinCounter = _coinAmount + 1;
+        }
+
+        if (Input.GetKeyDown(KeyCode.Space)) // TODO: Touchscreen input
+        {
+            _hintText.SetActive(false);
         }
 
         if (!_inLevelEndScreen)
