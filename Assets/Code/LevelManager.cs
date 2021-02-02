@@ -9,7 +9,7 @@ public class LevelManager : MonoBehaviour
     public static readonly string HIGH_SCORE_PREFS_NAME = "HighScore";
     public static readonly string SESSION_COINS_PREFS_NAME = "CoinsInSession";
 
-    private const int LEVEL_TIME_LIMIT_SEC = 100;
+    private const int LEVEL_TIME_LIMIT_SEC = 60;
     private const string MAIN_MENU_LEVEL_NAME = "MainMenu";
 
     public static LevelManager Instance;
@@ -204,7 +204,7 @@ public class LevelManager : MonoBehaviour
     {
         var currentScore = PlayerPrefs.GetInt(SESSION_COINS_PREFS_NAME);
         int add = coin.IsExtra ? currentScore / 10 : 1;
-        currentScore += add == 0 ? 5 : add; // Diamond is 10% or 5 if player has < 10 points
+        currentScore += add == 0 ? 2 : add;
         PlayerPrefs.SetInt(SESSION_COINS_PREFS_NAME, currentScore);
 
         StartCoroutine(FlyToHUDRoutine(coin, _coinsHUDSprite));
