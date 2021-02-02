@@ -52,7 +52,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 603641557}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 058cba836c1846c3aa1c5fd2e28aea77, type: 3}
   m_Name: 
@@ -874,7 +874,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &4485889638383006823
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1070,7 +1070,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &8021192046227869351
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1638,6 +1638,7 @@ MonoBehaviour:
   _nextLevelParent: {fileID: 7378704603503951253}
   _nextLevelTimerText: {fileID: 7543550840634425471}
   _failParent: {fileID: 5356291499810671574}
+  _failText: {fileID: 811497464355964552}
   _failScoreText: {fileID: 6791745511129068191}
   _doneParent: {fileID: 4461970134821698513}
   _doneScoreText: {fileID: 6506247535235200737}
@@ -2345,7 +2346,7 @@ PrefabInstance:
     - target: {fileID: 3988567100814585746, guid: 7a4d59365165947879accde4663c6322,
         type: 3}
       propertyPath: m_Enabled
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 3988567101360616864, guid: 7a4d59365165947879accde4663c6322,
         type: 3}
@@ -2570,7 +2571,7 @@ PrefabInstance:
     - target: {fileID: 3988567100814585746, guid: 7a4d59365165947879accde4663c6322,
         type: 3}
       propertyPath: m_Enabled
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 3988567101360616864, guid: 7a4d59365165947879accde4663c6322,
         type: 3}

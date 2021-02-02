@@ -45,7 +45,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _grid: {fileID: 0}
   _coinsHUDSprite: {fileID: 0}
+  _hintText: {fileID: 0}
   _wallPrefab: {fileID: 3545351147668411620, guid: 3dab89b64933f480981adef4af5bfade,
+    type: 3}
+  _edgePrefab: {fileID: 3545351147668411620, guid: d03c4df9423cc416fa1f9e311dd6e8e0,
     type: 3}
   _playerPrefab: {fileID: 5169825977537542068, guid: 0d2c7b5c16d484282a5e6d3ef1724b17,
     type: 3}

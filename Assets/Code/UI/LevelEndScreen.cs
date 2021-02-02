@@ -5,8 +5,10 @@ using TMPro;
 
 public class LevelEndScreen : MonoBehaviour
 {
-    private const string TIMER_TEXT = "{0} seconds";
     private const string SCORE_TEXT = "{0} points.";
+    private const string ZERO_SCORE_TEXT = "ZERO points!?";
+    private const string SOME_SCORE_COMMENT = "Well, at least you got";
+    private const string ZERO_SCORE_COMMENT = "Also, you scored";
 
     [SerializeField] private GameObject _newHighScoreText;
     [Header("Next Level")]
@@ -15,6 +17,7 @@ public class LevelEndScreen : MonoBehaviour
     [SerializeField] private TextMeshProUGUI _nextLevelTimerText;
     [Header("Fail")]
     [SerializeField] private GameObject _failParent;
+    [SerializeField] private TextMeshProUGUI _failText;
     [SerializeField] private TextMeshProUGUI _failScoreText;
     [Header("Completed")]
     [SerializeField] private GameObject _doneParent;
@@ -72,11 +75,21 @@ public class LevelEndScreen : MonoBehaviour
 
     public void LevelFailed()
     {
-        _nextLevelParent.SetActive(true);
-        _failParent.SetActive(false);
+        _nextLevelParent.SetActive(false);
+        _failParent.SetActive(true);
         _doneParent.SetActive(false);
 
-        _failScoreText.text = string.Format(SCORE_TEXT, PlayerPrefs.GetInt(LevelManager.HIGH_SCORE_PREFS_NAME));
+        var score = PlayerPrefs.GetInt(LevelManager.SESSION_COINS_PREFS_NAME);
+        if (score == 0)
+        {
+            _failText.text = ZERO_SCORE_COMMENT;
+            _failScoreText.text = ZERO_SCORE_TEXT;
+        }
+        else
+        {
+            _failText.text = SOME_SCORE_COMMENT;
+            _failScoreText.text = string.Format(SCORE_TEXT, PlayerPrefs.GetInt(LevelManager.HIGH_SCORE_PREFS_NAME));
+        }
     }
 
     public void StartNextLevel()

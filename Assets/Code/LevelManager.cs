@@ -21,6 +21,7 @@ public class LevelManager : MonoBehaviour
 
     [Header("Prefabs")]
     [SerializeField] private GameObject _wallPrefab;
+    [SerializeField] private GameObject _edgePrefab;
     [SerializeField] private GameObject _playerPrefab;
     [SerializeField] private GameObject _coinPrefab;
     [SerializeField] private GameObject _levelEndScreenPrefab;
@@ -60,22 +61,23 @@ public class LevelManager : MonoBehaviour
         _cellSize = _grid.cellSize.x;
         _cellHalf = _grid.cellSize.x / 2f;
 
-        var leftWall = Instantiate(_wallPrefab) as GameObject;
+        var leftWall = Instantiate(_edgePrefab) as GameObject;
         leftWall.name = "Left Wall";
         leftWall.transform.position = new Vector2(-_cellSize * (LEVEL_WIDTH / 2f), 0f);
         leftWall.transform.localScale = new Vector3(_cellSize, _cellSize * (LEVEL_HEIGHT + 2), 1f);
 
-        var rightWall = Instantiate(_wallPrefab) as GameObject;
+        var rightWall = Instantiate(_edgePrefab) as GameObject;
         rightWall.name = "Right Wall";
         rightWall.transform.position = new Vector2(_cellSize * (LEVEL_WIDTH / 2f + 1), 0f);
         rightWall.transform.localScale = new Vector3(_cellSize, _cellSize * (LEVEL_HEIGHT + 2), 1f);
 
-        var floor = Instantiate(_wallPrefab) as GameObject;
+        var floor = Instantiate(_edgePrefab) as GameObject;
         floor.name = "Floor";
         floor.transform.position = new Vector2(0f, -_cellSize * (LEVEL_HEIGHT / 2f) - _cellHalf);
         floor.transform.localScale = new Vector3(_cellSize * (LEVEL_WIDTH + 2), _cellSize, 1f);
+        var sprite = floor.GetComponent<SpriteRenderer>().sprite;
 
-        var ceiling = Instantiate(_wallPrefab) as GameObject;
+        var ceiling = Instantiate(_edgePrefab) as GameObject;
         ceiling.name = "Ceiling";
         ceiling.transform.position = new Vector2(0f, _cellSize * (LEVEL_HEIGHT / 2f) + _cellHalf);
         ceiling.transform.localScale = new Vector3(_cellSize * (LEVEL_WIDTH + 2), _cellSize, 1f);
@@ -143,6 +145,11 @@ public class LevelManager : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.C))
         {
             _coinCounter = _coinAmount + 1;
+        }
+
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            _levelTimer = 0f;
         }
 
         if (Input.GetKeyDown(KeyCode.Space)) // TODO: Touchscreen input
