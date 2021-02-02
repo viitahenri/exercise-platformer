@@ -56,7 +56,7 @@ public class FallingState : State
     {
         if (!_player.IsGrounded() && _timer <= GraceTime)
         {
-            Debug.Log($"Grace jump when falling!");
+            // Debug.Log($"Grace jump when falling!");
             _player.StateMachine.ChangeState(_player.StateMachine.jumpingState);
         }
     }

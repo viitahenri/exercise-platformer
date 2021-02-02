@@ -5,10 +5,7 @@ using UnityEngine;
 public class RunningState : State
 {
 
-    public RunningState(Player player) : base(player)
-    {
-        
-    }
+    public RunningState(Player player) : base(player) { }
 
     public override void Enter()
     {
@@ -30,11 +27,6 @@ public class RunningState : State
         {
             _player.StateMachine.ChangeState(_player.StateMachine.fallingState);
         }
-    }
-
-    public override void Exit()
-    {
-        
     }
 
     public override void HandleInput()

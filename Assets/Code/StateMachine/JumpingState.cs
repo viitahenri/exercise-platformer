@@ -63,9 +63,4 @@ public class JumpingState : State
             }            
         }
     }
-
-    public override void Exit()
-    {
-        
-    }
 }

@@ -4,22 +4,7 @@ using UnityEngine;
 
 public class WallHuggingState : State
 {
-    private float _timer = 0f;
-
-    public WallHuggingState(Player player) : base(player)
-    {
-    }
-
-    public override void Enter()
-    {
-        // Debug.Log("Wallhug");
-        _timer = 0f;
-    }
-    
-    public override void Update()
-    {
-        _timer += Time.deltaTime;
-    }
+    public WallHuggingState(Player player) : base(player) { }
 
     public override void HandleInput()
     {
