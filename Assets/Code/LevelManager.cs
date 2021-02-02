@@ -65,23 +65,23 @@ public class LevelManager : MonoBehaviour
 
         var leftWall = Instantiate(_edgePrefab) as GameObject;
         leftWall.name = "Left Wall";
-        leftWall.transform.position = new Vector2(-_cellSize * (LEVEL_WIDTH / 2f), 0f);
-        leftWall.transform.localScale = new Vector3(_cellSize, _cellSize * (LEVEL_HEIGHT + 2), 1f);
+        leftWall.transform.position = new Vector2(-_cellSize * (LEVEL_WIDTH / 2f) - _cellHalf, 0f);
+        leftWall.transform.localScale = new Vector3(_cellSize * 2f, _cellSize * (LEVEL_HEIGHT + 2), 1f);
 
         var rightWall = Instantiate(_edgePrefab) as GameObject;
         rightWall.name = "Right Wall";
-        rightWall.transform.position = new Vector2(_cellSize * (LEVEL_WIDTH / 2f + 1), 0f);
-        rightWall.transform.localScale = new Vector3(_cellSize, _cellSize * (LEVEL_HEIGHT + 2), 1f);
+        rightWall.transform.position = new Vector2(_cellSize * (LEVEL_WIDTH / 2f + 1) + _cellHalf, 0f);
+        rightWall.transform.localScale = new Vector3(_cellSize * 2f, _cellSize * (LEVEL_HEIGHT + 2), 1f);
 
         var floor = Instantiate(_edgePrefab) as GameObject;
         floor.name = "Floor";
-        floor.transform.position = new Vector2(0f, -_cellSize * (LEVEL_HEIGHT / 2f) - _cellHalf);
+        floor.transform.position = new Vector2(_cellHalf, -_cellSize * (LEVEL_HEIGHT / 2f) - _cellHalf);
         floor.transform.localScale = new Vector3(_cellSize * (LEVEL_WIDTH + 2), _cellSize, 1f);
         var sprite = floor.GetComponent<SpriteRenderer>().sprite;
 
         var ceiling = Instantiate(_edgePrefab) as GameObject;
         ceiling.name = "Ceiling";
-        ceiling.transform.position = new Vector2(0f, _cellSize * (LEVEL_HEIGHT / 2f) + _cellHalf);
+        ceiling.transform.position = new Vector2(_cellHalf, _cellSize * (LEVEL_HEIGHT / 2f) + _cellHalf);
         ceiling.transform.localScale = new Vector3(_cellSize * (LEVEL_WIDTH + 2), _cellSize, 1f);
 
         BuildLevel();

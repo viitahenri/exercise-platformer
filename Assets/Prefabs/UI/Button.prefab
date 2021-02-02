@@ -86,8 +86,8 @@ GameObject:
   - component: {fileID: 6235627099838060461}
   - component: {fileID: 6235627099838060460}
   - component: {fileID: 6235627099838060459}
-  - component: {fileID: 6235627099838060462}
   - component: {fileID: 6235627099838060463}
+  - component: {fileID: 7368283723751853754}
   m_Layer: 5
   m_Name: Button
   m_TagString: Untagged
@@ -196,9 +196,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 6235627099838060462}
-        m_MethodName: StartGame
-        m_Mode: 1
+      - m_Target: {fileID: 7368283723751853754}
+        m_MethodName: LoadScene
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -207,18 +207,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &6235627099838060462
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 6235627099838060457}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 44b0167f6819b4c8a8d748c428de27b5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!95 &6235627099838060463
 Animator:
   serializedVersion: 3
@@ -238,6 +226,18 @@ Animator:
   m_HasTransformHierarchy: 1
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorControllerStateOnDisable: 0
+--- !u!114 &7368283723751853754
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6235627099838060457}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 38729c398b3064779a41ac2fa6d487ee, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &6235627100501287736
 GameObject:
   m_ObjectHideFlags: 0

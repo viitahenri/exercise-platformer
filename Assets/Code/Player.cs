@@ -29,9 +29,6 @@ public class Player : MonoBehaviour
     [Range(0, 50f)]
     public float WallJumpForce = 30f;
 
-    [Header("Sounds")]
-    [SerializeField] private List<AudioClip> _jumpClips = new List<AudioClip>();
-
     public Rigidbody2D Rigidbody { get { return _rigidbody; } }
     public StateMachine StateMachine { get { return _stateMachine; } }
     public SpriteRenderer Sprite{ get { return _sprite; } }
@@ -49,14 +46,12 @@ public class Player : MonoBehaviour
     private List<ContactPoint2D> _contacts = new List<ContactPoint2D>();
     private ContactFilter2D _filter;
     private Animation _animation;
-    private AudioSource _audioSource;
     private SpriteRenderer _sprite;
 
     void Awake()
     {
         _animation = GetComponent<Animation>();
         _rigidbody = GetComponent<Rigidbody2D>();
-        _audioSource = GetComponent<AudioSource>();
         _sprite = GetComponentInChildren<SpriteRenderer>();
 
         _stateMachine = new StateMachine(this);
@@ -152,10 +147,5 @@ public class Player : MonoBehaviour
     public void JumpEffect()
     {
         _animation.Play(JUMP_ANIMATION_NAME, PlayMode.StopSameLayer);
-
-        if (_jumpClips.Count > 0)
-        {
-            //_audioSource.PlayOneShot(_jumpClips[Random.Range(0, _jumpClips.Count)]);
-        }
     }
 }
