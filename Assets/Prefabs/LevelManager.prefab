@@ -86,3 +86,5 @@ MonoBehaviour:
     m_PostInfinity: 2
     m_RotationOrder: 4
   _coinFlyTime: 0.5
+  _extraCoinLevelChance: 33
+  _extraCoinTimeLimitSeconds: 30

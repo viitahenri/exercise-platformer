@@ -30,6 +30,9 @@ public class LevelManager : MonoBehaviour
     [SerializeField] private List<LevelDataScriptableObject> _levels;
     [SerializeField] private AnimationCurve _coinFlyCurve;
     [SerializeField] private float _coinFlyTime;
+    [Range(0, 100)]
+    [SerializeField] private int _extraCoinLevelChance = 33;
+    [SerializeField] private int _extraCoinTimeLimitSeconds = 30;
 
     private GameObject _wallParent = null;
     private GameObject _playerGameObject = null;
@@ -38,9 +41,8 @@ public class LevelManager : MonoBehaviour
     private float _cellSize = 5f;
     private float _cellHalf = 2.5f;
     private float _levelTimer = 0f;
-    private int _coinAmount = 0;
-    private int _coinCounter = 0;
     private bool _inLevelEndScreen = false;
+    private List<Coin> _coins = new List<Coin>();
 
     void Start()
     {
@@ -88,10 +90,9 @@ public class LevelManager : MonoBehaviour
     public void BuildLevel()
     {
         _levelTimer = LEVEL_TIME_LIMIT_SEC;
-        _coinCounter = 0;
-        HUD.Instance.SetCoinAmount(_coinCounter);
-        _coinAmount = 0;
+        HUD.Instance.SetCoinAmount(0);
         _inLevelEndScreen = false;
+        _coins.Clear();
 
         if (_wallParent != null)
         {
@@ -126,13 +127,19 @@ public class LevelManager : MonoBehaviour
                 else if (!(y == 3 && x == 0)) // Left bottom cell is always for player
                 {
                     // Coins
-                    var coin = Instantiate(_coinPrefab, _wallParent.transform) as GameObject;
-                    coin.name = $"Coin ({x},{y})";
-                    coin.transform.localPosition = new Vector2(_cellHalf + _cellSize * x, -_cellHalf - _cellSize * y);
-
-                    _coinAmount++;
+                    var coinObj = Instantiate(_coinPrefab, _wallParent.transform) as GameObject;
+                    coinObj.name = $"Coin ({x},{y})";
+                    coinObj.transform.localPosition = new Vector2(_cellHalf + _cellSize * x, -_cellHalf - _cellSize * y);
+                    _coins.Add(coinObj.GetComponent<Coin>());
                 }
             }
+        }
+
+        bool hasExtra = Random.Range(0, 100) <= _extraCoinLevelChance;
+        if (hasExtra)
+        {
+            var idx = Random.Range(0, _coins.Count);
+            _coins[idx].SetExtra(true, _extraCoinTimeLimitSeconds);
         }
     }
 
@@ -141,18 +148,7 @@ public class LevelManager : MonoBehaviour
         _levelTimer -= Time.deltaTime;
         HUD.Instance.SetTimer(Mathf.CeilToInt(_levelTimer));
 
-        // Debug
-        if (Input.GetKeyDown(KeyCode.C))
-        {
-            _coinCounter = _coinAmount + 1;
-        }
-
-        if (Input.GetKeyDown(KeyCode.T))
-        {
-            _levelTimer = 0f;
-        }
-
-        if (Input.GetKeyDown(KeyCode.Space)) // TODO: Touchscreen input
+        if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended))
         {
             _hintText.SetActive(false);
         }
@@ -164,7 +160,7 @@ public class LevelManager : MonoBehaviour
                 // Game over
                 EndLevel(false, false);
             }
-            else if (_coinCounter >= _coinAmount)
+            else if (_coins.TrueForAll(c => c.CurrentState != Coin.State.Collectable))
             {
                 _currentLevel++;
 
@@ -204,37 +200,36 @@ public class LevelManager : MonoBehaviour
             screen.LevelFailed();
     }
 
-    public void CollectCoin(GameObject gameObject)
+    public void CollectCoin(Coin coin)
     {
-        _coinCounter++;
-
         var currentScore = PlayerPrefs.GetInt(SESSION_COINS_PREFS_NAME);
-        currentScore++;
+        int add = coin.IsExtra ? currentScore / 10 : 1;
+        currentScore += add == 0 ? 5 : add; // Diamond is 10% or 5 if player has < 10 points
         PlayerPrefs.SetInt(SESSION_COINS_PREFS_NAME, currentScore);
 
-        StartCoroutine(FlyToHUDRoutine(gameObject, _coinsHUDSprite));
+        StartCoroutine(FlyToHUDRoutine(coin, _coinsHUDSprite));
     }
 
-    IEnumerator FlyToHUDRoutine(GameObject gameObject, RectTransform target)
+    IEnumerator FlyToHUDRoutine(Coin coin, RectTransform target)
     {
         var screenRect = RectTransformToScreenSpace(target);
         Vector3 targetWorldPoint = _mainCamera.ScreenToWorldPoint(screenRect.center);
 
         float timer = 0f;
         float safety = 10f;
-        var start = gameObject.transform.position;
+        var start = coin.transform.position;
         var end = targetWorldPoint;
 
-        while (gameObject != null && timer < _coinFlyTime && timer < safety)
+        while (coin.gameObject != null && timer < _coinFlyTime && timer < safety)
         {
             timer += Time.deltaTime;
             var eval = _coinFlyCurve.Evaluate(timer / _coinFlyTime);
-            gameObject.transform.position = Vector3.Lerp(start, end, eval);
+            coin.transform.position = Vector3.Lerp(start, end, eval);
             yield return new WaitForEndOfFrame();
         }
 
-        HUD.Instance.SetCoinAmount(_coinCounter);
-        Destroy(gameObject);
+        HUD.Instance.SetCoinAmount(PlayerPrefs.GetInt(SESSION_COINS_PREFS_NAME));
+        coin.Collect();
     }
 
     // From https://answers.unity.com/questions/1013011/convert-recttransform-rect-to-screen-space.html

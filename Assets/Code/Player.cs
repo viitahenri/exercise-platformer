@@ -79,7 +79,7 @@ public class Player : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        if (Input.GetKeyDown(KeyCode.Space) || (Input.touchCount > 0 && Input.touches[0].phase == TouchPhase.Ended))
         {
             _stateMachine.HandleInput();
         }
@@ -91,8 +91,9 @@ public class Player : MonoBehaviour
     {
         if (col.gameObject.layer == LayerMask.NameToLayer(COIN_LAYER_NAME))
         {
-            // Debug.Log($"Collected {col.name}");
-            LevelManager.Instance.CollectCoin(col.gameObject);
+            var coin = col.GetComponent<Coin>();
+            coin.ToggleCanvas(false);
+            LevelManager.Instance.CollectCoin(coin);
         }
     }
 
